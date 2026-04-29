@@ -49,27 +49,11 @@
             text-transform: uppercase;
         }
 
-        .content-card {
-            background: #FFB400;
-            border-radius: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            aspect-ratio: 1/1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-bottom: 4px solid #CC9000;
-        }
-        .content-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(255, 180, 0, 0.3);
-        }
-
         .report-card {
             border-radius: 1.25rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
         }
         .dark .report-card { 
             border-color: rgba(255,255,255,0.05);
@@ -78,53 +62,159 @@
 
         .report-card:hover {
             border-color: #FFB400;
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
         .progress-bar-custom {
-            height: 8px;
+            height: 10px;
             border-radius: 10px;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.05);
             overflow: hidden;
         }
-        .dark .progress-bar-custom { background: rgba(255,255,255,0.1); }
+        .dark .progress-bar-custom { background: rgba(255,255,255,0.05); }
 
         .page-transition {
-            animation: fadeIn 0.4s ease-out forwards;
+            animation: fadeIn 0.5s ease-out forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .nav-active {
             color: #FFB400;
-            border-bottom: 2px solid #FFB400;
+            position: relative;
+        }
+        .nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #FFB400;
+        }
+
+        /* Dropdown Animation */
+        #mobileDropdown {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+        }
+        #mobileDropdown.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 2rem;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 400px;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .toast.show {
+            visibility: visible;
+            animation: fadeinout 2s forwards;
+        }
+        @keyframes fadeinout {
+            0% { opacity: 0; bottom: 0; }
+            20% { opacity: 1; bottom: 30px; }
+            80% { opacity: 1; bottom: 30px; }
+            100% { opacity: 0; bottom: 0; }
         }
     </style>
 </head>
-<body class="bg-bg-light text-slate-900 dark:bg-onyx dark:text-slate-100 font-sans">
+<body class="bg-bg-light text-slate-900 dark:bg-onyx dark:text-slate-100 font-sans overflow-x-hidden">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full sticky-nav py-4 bg-white/90 dark:bg-onyx/90 border-b border-black/5 dark:border-white/5">
-        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+    <nav class="fixed top-0 w-full sticky-nav py-4 bg-white/80 dark:bg-onyx/80 border-b border-black/5 dark:border-white/5 z-[150]">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between relative">
             <div class="flex items-center space-x-3 group cursor-pointer" onclick="navigateTo('home')">
                 <div class="w-8 h-8 bg-accent-yellow rounded-lg rotate-12 group-hover:rotate-0 transition-transform"></div>
                 <span class="text-xl font-black tracking-tight uppercase">ANGELA.</span>
             </div>
             
+            <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-8 text-[11px] font-black uppercase tracking-widest">
-                <button onclick="navigateTo('home')" id="nav-home" class="nav-active hover:text-accent-yellow transition-colors pb-1">Home</button>
-                <button onclick="navigateTo('reports')" id="nav-reports" class="hover:text-accent-yellow transition-colors pb-1">Weekly Reports</button>
-                <button onclick="navigateTo('skills')" id="nav-skills" class="hover:text-accent-yellow transition-colors pb-1">Skills</button>
-                <button onclick="navigateTo('reflection')" id="nav-reflection" class="hover:text-accent-yellow transition-colors pb-1">Reflection</button>
+                <button onclick="navigateTo('home')" id="nav-home" class="nav-active hover:text-accent-yellow transition-colors">Home</button>
+                <button onclick="navigateTo('reports')" id="nav-reports" class="hover:text-accent-yellow transition-colors">Weekly Reports</button>
+                <button onclick="navigateTo('skills')" id="nav-skills" class="hover:text-accent-yellow transition-colors">Skills</button>
+                <button onclick="navigateTo('reflection')" id="nav-reflection" class="hover:text-accent-yellow transition-colors">Reflection</button>
             </div>
 
-            <button id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-white/10 transition-all hover:scale-105">
-                <i class="fa-solid fa-moon dark:hidden text-slate-600"></i>
-                <i class="fa-solid fa-sun hidden dark:block text-accent-yellow"></i>
-            </button>
+            <div class="flex items-center space-x-3">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-white/10 transition-all hover:scale-105">
+                    <i class="fa-solid fa-moon dark:hidden text-slate-600"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-accent-yellow"></i>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400">
+                    <i class="fa-solid fa-bars-staggered" id="menuIcon"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobileDropdown" class="absolute top-full right-6 mt-4 w-56 bg-white dark:bg-surface-dark rounded-2xl shadow-2xl border border-black/5 dark:border-white/5 py-4 px-2 md:hidden">
+                <div class="flex flex-col space-y-1">
+                    <button onclick="navigateTo('home')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
+                        <i class="fa-solid fa-house text-accent-yellow w-5"></i>
+                        <span>Home</span>
+                    </button>
+                    <button onclick="navigateTo('reports')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
+                        <i class="fa-solid fa-book text-accent-yellow w-5"></i>
+                        <span>Weekly Reports</span>
+                    </button>
+                    <button onclick="navigateTo('skills')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
+                        <i class="fa-solid fa-bolt text-accent-yellow w-5"></i>
+                        <span>Skills</span>
+                    </button>
+                    <button onclick="navigateTo('reflection')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
+                        <i class="fa-solid fa-comment text-accent-yellow w-5"></i>
+                        <span>Reflection</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -142,7 +232,7 @@
                         OJT<br>PORT<br><span class="text-accent-yellow">FOLIO.</span>
                     </h1>
                     <p class="text-slate-700 dark:text-slate-400 max-w-sm mx-auto lg:mx-0 font-bold text-lg leading-relaxed mb-8">
-                        Hello. I'm Angela, a self-taught IT student documenting 486 hours of growth, coding, and exploration in a professional corporate environment.
+                        Hello. I'm Angela, an IT student documenting 486 hours of growth, coding, and exploration in a professional corporate environment.
                     </p>
                     <button onclick="navigateTo('reports')" class="bg-accent-yellow text-black font-black px-8 py-4 rounded-xl text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-accent-yellow/20">
                         View Journal
@@ -156,14 +246,14 @@
                 </div>
             </section>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16 items-center">
-                <div class="bg-white dark:bg-surface-dark p-10 rounded-[2rem] border border-slate-200 dark:border-white/5">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16 items-stretch">
+                <div class="bg-white dark:bg-surface-dark p-10 rounded-[2rem] border border-slate-200 dark:border-white/5 flex flex-col justify-center">
                     <h2 class="text-2xl font-black mb-6 uppercase">Mission Overview</h2>
                     <p class="text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
-                        My goal is to integrate technical excellence with creative visual storytelling. During this 486-hour internship, I am focusing on streamlining development workflows and enhancing user interface responsiveness.
+                        My goal is to integrate technical excellence with creative visual storytelling. During this 486-hour internship, I focused on streamlining development workflows and enhancing user interface responsiveness.
                     </p>
                 </div>
-                <div class="bg-white dark:bg-surface-dark p-10 rounded-[2rem] border border-slate-200 dark:border-white/5">
+                <div class="bg-white dark:bg-surface-dark p-10 rounded-[2rem] border border-slate-200 dark:border-white/5 flex flex-col justify-center">
                     <div class="flex justify-between items-end mb-4">
                         <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">OJT Completion</span>
                         <span class="text-3xl font-black text-slate-900 dark:text-white">486 <span class="text-lg font-medium text-slate-400">/ 486 HRS</span></span>
@@ -194,7 +284,6 @@
         <div id="page-skills" class="hidden page-transition">
             <h2 class="giant-text text-5xl mb-12 text-slate-900 dark:text-white">Technical Arsenal</h2>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Skill Category -->
                 <div class="bg-white dark:bg-surface-dark p-8 rounded-[2rem] border border-slate-200 dark:border-white/5">
                     <div class="w-12 h-12 bg-accent-yellow rounded-xl flex items-center justify-center mb-6">
                         <i class="fa-solid fa-code text-black text-xl"></i>
@@ -208,7 +297,6 @@
                         <span class="bg-slate-100 dark:bg-onyx px-3 py-1 rounded-md text-[10px] font-black text-slate-700 dark:text-slate-300">GIT/GITHUB</span>
                     </div>
                 </div>
-                <!-- Skill Category -->
                 <div class="bg-white dark:bg-surface-dark p-8 rounded-[2rem] border border-slate-200 dark:border-white/5">
                     <div class="w-12 h-12 bg-accent-yellow rounded-xl flex items-center justify-center mb-6">
                         <i class="fa-solid fa-pen-nib text-black text-xl"></i>
@@ -222,7 +310,6 @@
                         <span class="bg-slate-100 dark:bg-onyx px-3 py-1 rounded-md text-[10px] font-black text-slate-700 dark:text-slate-300">CANVA PRO</span>
                     </div>
                 </div>
-                <!-- Skill Category -->
                 <div class="bg-white dark:bg-surface-dark p-8 rounded-[2rem] border border-slate-200 dark:border-white/5">
                     <div class="w-12 h-12 bg-accent-yellow rounded-xl flex items-center justify-center mb-6">
                         <i class="fa-solid fa-user-gear text-black text-xl"></i>
@@ -264,155 +351,220 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-16 bg-slate-900 text-white text-center">
+    <footer class="py-20 bg-slate-900 text-white text-center">
         <h2 class="giant-text text-4xl mb-6">Let's Connect :</h2>
-        <div class="flex flex-col items-center space-y-3 font-bold text-sm text-slate-400 mb-8">
-            <p><i class="fa-solid fa-envelope mr-3 text-accent-yellow"></i> angela.ojt@email.com</p>
+        <div class="flex flex-col items-center space-y-4 font-bold text-sm text-slate-400 mb-10">
+            <button onclick="copyToClipboard('angela.ojt@email.com')" class="group flex items-center hover:text-white transition-colors">
+                <i class="fa-solid fa-envelope mr-3 text-accent-yellow group-hover:scale-110 transition-transform"></i> 
+                angela.ojt@email.com
+            </button>
             <p><i class="fa-solid fa-location-dot mr-3 text-accent-yellow"></i> Manila, Philippines</p>
         </div>
-        <div class="w-32 h-32 bg-white p-2 rounded-[1.5rem] mx-auto shadow-2xl mb-8">
+        <div class="w-36 h-36 bg-white p-3 rounded-[2rem] mx-auto shadow-2xl mb-10">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=AngelaPortfolio" class="w-full h-full" alt="QR Contact">
         </div>
         <p class="text-slate-600 text-[9px] font-black uppercase tracking-widest">© ANGELA BSIT • 2025</p>
     </footer>
 
     <script>
+        // Updated data with image arrays (5 images per week) up to Week 12
         const reports = [
-            {
-                id: 1,
-                week: "Week 01",
-                dates: "Oct 01 - Oct 05",
-                summary: "Foundation phase: Orientation and dev environment synchronization.",
-                content: "During my first week, I was immersed in the company culture. I focused on technical alignment by standardizing my workspace with the company's internal Docker containers and establishing a unified Git flow with the senior development team.",
-                tasks: ["General Orientation", "Setup Docker & VS Code", "Reviewed Project Briefings", "Git Access Configuration", "Team Introductions"],
-                challenges: ["Navigating the scale of the enterprise repository.", "Syncing environment variables for legacy systems."],
-                learnings: ["Docker environment isolation.", "Collaborative Git branching strategies.", "Professional office etiquette."],
-                image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 1, week: "Week 01", dates: "Oct 01 - Oct 05", summary: "Foundation phase: Orientation and dev environment synchronization.", 
+                content: "During my first week, I was immersed in the company culture. I focused on technical alignment by standardizing my workspace with the company's internal Docker containers and establishing a unified Git flow with the senior development team.", 
+                tasks: ["General Orientation", "Setup Docker & VS Code", "Reviewed Project Briefings", "Git Access Configuration", "Team Introductions"], 
+                challenges: ["Navigating the scale of the enterprise repository.", "Syncing environment variables for legacy systems."], 
+                learnings: ["Docker environment isolation.", "Collaborative Git branching strategies.", "Professional office etiquette."], 
+                images: [
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 2,
-                week: "Week 02",
-                dates: "Oct 08 - Oct 12",
-                summary: "UI component architecture and responsive design implementation.",
-                content: "I took ownership of the internal dashboard's navigation module. The goal was to maintain visual consistency while optimizing for high-density information display on mobile devices using Tailwind CSS.",
-                tasks: ["Navigation Tree Refactor", "Tailwind Theme Injection", "Unit Testing UI Components", "UX Audit for Mobile Viewports"],
-                challenges: ["Balancing vertical space with high menu density.", "Ensuring accessibility for color-blind users."],
-                learnings: ["Responsive Typography Hierarchy.", "Component Encapsulation.", "WCAG Accessibility Standards."],
-                image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 2, week: "Week 02", dates: "Oct 08 - Oct 12", summary: "UI component architecture and responsive design implementation.", 
+                content: "I took ownership of the internal dashboard's navigation module. The goal was to maintain visual consistency while optimizing for high-density information display on mobile devices using Tailwind CSS.", 
+                tasks: ["Navigation Tree Refactor", "Tailwind Theme Injection", "Unit Testing UI Components", "UX Audit for Mobile Viewports"], 
+                challenges: ["Balancing vertical space with high menu density.", "Ensuring accessibility for color-blind users."], 
+                learnings: ["Responsive Typography Hierarchy.", "Component Encapsulation.", "WCAG Accessibility Standards."], 
+                images: [
+                    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 3,
-                week: "Week 03",
-                dates: "Oct 15 - Oct 19",
-                summary: "Integration of API endpoints and database logic mapping.",
-                content: "Working closely with backend engineers, I mapped out the data flow from the PostgreSQL database through the Node.js API to the frontend state management system.",
-                tasks: ["REST API Testing (Postman)", "State Store Refactor", "Database Query Debugging", "WebSocket Event Handling"],
-                challenges: ["Handling race conditions in async fetching.", "Debugging complex SQL joins."],
-                learnings: ["Data Normalization in frontend state.", "Asynchronous State Control patterns.", "API Security Headers."],
-                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 3, week: "Week 03", dates: "Oct 15 - Oct 19", summary: "Integration of API endpoints and database logic mapping.", 
+                content: "Working closely with backend engineers, I mapped out the data flow from the PostgreSQL database through the Node.js API to the frontend state management system.", 
+                tasks: ["REST API Testing (Postman)", "State Store Refactor", "Database Query Debugging", "WebSocket Event Handling"], 
+                challenges: ["Handling race conditions in async fetching.", "Debugging complex SQL joins."], 
+                learnings: ["Data Normalization in frontend state.", "Asynchronous State Control patterns.", "API Security Headers."], 
+                images: [
+                    "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1544383335-c533c4a98ccd?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 4,
-                week: "Week 04",
-                dates: "Oct 22 - Oct 26",
-                summary: "Visual asset optimization and marketing collateral design.",
-                content: "I shifted to the creative side, assisting the marketing team in optimizing high-resolution assets for the web using Adobe Photoshop and Premiere.",
-                tasks: ["Asset Compression for Web performance", "Instructional Video Editing", "Figma Design System Maintenance", "SVG Cleaning"],
-                challenges: ["Reducing file size without losing visual clarity.", "Maintaining brand consistency."],
-                learnings: ["WebP/AVIF compression formats.", "Video pacing for technical tutorials.", "Figma Auto-layouts."],
-                image: "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 4, week: "Week 04", dates: "Oct 22 - Oct 26", summary: "Visual asset optimization and marketing collateral design.", 
+                content: "I shifted to the creative side, assisting the marketing team in optimizing high-resolution assets for the web using Adobe Photoshop and Premiere.", 
+                tasks: ["Asset Compression for Web performance", "Instructional Video Editing", "Figma Design System Maintenance", "SVG Cleaning"], 
+                challenges: ["Reducing file size without losing visual clarity.", "Maintaining brand consistency."], 
+                learnings: ["WebP/AVIF compression formats.", "Video pacing for technical tutorials.", "Figma Auto-layouts."], 
+                images: [
+                    "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 5,
-                week: "Week 05",
-                dates: "Oct 29 - Nov 02",
-                summary: "Advanced Frontend performance and core web vitals audit.",
-                content: "Focused on optimizing the Largest Contentful Paint (LCP) and First Input Delay (FID) for the client portal. This involved deep-diving into Chrome DevTools.",
-                tasks: ["Lighthouse Performance Audit", "Lazy Loading Implementation", "Critical CSS Path Analysis", "Image CDN integration"],
-                challenges: ["Isolating third-party scripts causing layout shift.", "Balancing interactivity with load speed."],
-                learnings: ["Core Web Vitals metrics.", "Browser rendering pipelines.", "Async/Defer script execution."],
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 5, week: "Week 05", dates: "Oct 29 - Nov 02", summary: "Advanced Frontend performance and core web vitals audit.", 
+                content: "Focused on optimizing the Largest Contentful Paint (LCP) and First Input Delay (FID) for the client portal. This involved deep-diving into Chrome DevTools.", 
+                tasks: ["Lighthouse Performance Audit", "Lazy Loading Implementation", "Critical CSS Path Analysis", "Image CDN integration"], 
+                challenges: ["Isolating third-party scripts causing layout shift.", "Balancing interactivity with load speed."], 
+                learnings: ["Core Web Vitals metrics.", "Browser rendering pipelines.", "Async/Defer script execution."], 
+                images: [
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1504868584819-f8e90526ef49?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1454165833221-d7d176b7c205?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 6,
-                week: "Week 06",
-                dates: "Nov 05 - Nov 09",
-                summary: "Unit Testing and Quality Assurance automation.",
-                content: "Spent the week ensuring codebase stability by writing robust unit tests using Jest and React Testing Library for the core business logic components.",
-                tasks: ["Wrote 20+ Jest Unit Tests", "Integration Testing for Forms", "Bug Regression Tracking", "Continuous Integration setup"],
-                challenges: ["Mocking complex API dependencies.", "Testing edge cases in data validation."],
-                learnings: ["Test-Driven Development (TDD) basics.", "Mocking vs Spying in tests.", "Code Coverage importance."],
-                image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 6, week: "Week 06", dates: "Nov 05 - Nov 09", summary: "Unit Testing and Quality Assurance automation.", 
+                content: "Spent the week ensuring codebase stability by writing robust unit tests using Jest and React Testing Library for the core business logic components.", 
+                tasks: ["Wrote 20+ Jest Unit Tests", "Integration Testing for Forms", "Bug Regression Tracking", "Continuous Integration setup"], 
+                challenges: ["Mocking complex API dependencies.", "Testing edge cases in data validation."], 
+                learnings: ["Test-Driven Development (TDD) basics.", "Mocking vs Spying in tests.", "Code Coverage importance."], 
+                images: [
+                    "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1534665482403-a909d0d97c67?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 7,
-                week: "Week 07",
-                dates: "Nov 12 - Nov 16",
-                summary: "Backend Security hardening and Authentication logic.",
-                content: "Assisted the security team in reviewing the JWT (JSON Web Token) implementation and ensuring that CORS policies were strictly enforced on all staging endpoints.",
-                tasks: ["JWT Refresh Token Logic review", "CORS Configuration updates", "API Rate Limiting testing", "Security Header implementation"],
-                challenges: ["Debugging token expiration issues on mobile apps.", "Securing sensitive user routes."],
-                learnings: ["OAuth2 flow concepts.", "Cross-Site Scripting (XSS) prevention.", "Secure cookie management."],
-                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 7, week: "Week 07", dates: "Nov 12 - Nov 16", summary: "Backend Security hardening and Authentication logic.", 
+                content: "Assisted the security team in reviewing the JWT (JSON Web Token) implementation and ensuring that CORS policies were strictly enforced on all staging endpoints.", 
+                tasks: ["JWT Refresh Token Logic review", "CORS Configuration updates", "API Rate Limiting testing", "Security Header implementation"], 
+                challenges: ["Debugging token expiration issues on mobile apps.", "Securing sensitive user routes."], 
+                learnings: ["OAuth2 flow concepts.", "Cross-Site Scripting (XSS) prevention.", "Secure cookie management."], 
+                images: [
+                    "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 8,
-                week: "Week 08",
-                dates: "Nov 19 - Nov 23",
-                summary: "Design System expansion and Iconography design.",
-                content: "Created a custom set of UI icons for the internal toolbelt. I used Figma to ensure every icon followed a 24px grid system for pixel-perfect rendering.",
-                tasks: ["Custom SVG Icon Set design", "Figma Component Library update", "Interactive Prototypes for stakeholders", "Style Guide documentation"],
-                challenges: ["Ensuring visual consistency across different icons.", "Creating scalable SVG paths."],
-                learnings: ["Grid-based design systems.", "Micro-interactions in UI.", "Vector path optimization."],
-                image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 8, week: "Week 08", dates: "Nov 19 - Nov 23", summary: "Design System expansion and Iconography design.", 
+                content: "Created a custom set of UI icons for the internal toolbelt. I used Figma to ensure every icon followed a 24px grid system for pixel-perfect rendering.", 
+                tasks: ["Custom SVG Icon Set design", "Figma Component Library update", "Interactive Prototypes for stakeholders", "Style Guide documentation"], 
+                challenges: ["Ensuring visual consistency across different icons.", "Creating scalable SVG paths."], 
+                learnings: ["Grid-based design systems.", "Micro-interactions in UI.", "Vector path optimization."], 
+                images: [
+                    "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1522542550221-31fd19056126?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 9,
-                week: "Week 09",
-                dates: "Nov 26 - Nov 30",
-                summary: "Database migration and Data Integrity checking.",
-                content: "Assisted in migrating the local database to the production cloud instance. I helped verify data integrity using custom scripts to check for orphaned records.",
-                tasks: ["Data Mapping Verification", "Migration Script testing", "Database indexing audit", "Backup/Recovery simulation"],
-                challenges: ["Mapping legacy data structures to new schemas.", "Handling data type mismatches."],
-                learnings: ["Cloud Database Management.", "Data validation techniques.", "Database indexing for performance."],
-                image: "https://images.unsplash.com/photo-1544383335-c533c4a98ccd?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 9, week: "Week 09", dates: "Nov 26 - Nov 30", summary: "Database migration and Data Integrity checking.", 
+                content: "Assisted in migrating the local database to the production cloud instance. I helped verify data integrity using custom scripts to check for orphaned records.", 
+                tasks: ["Data Mapping Verification", "Migration Script testing", "Database indexing audit", "Backup/Recovery simulation"], 
+                challenges: ["Mapping legacy data structures to new schemas.", "Handling data type mismatches."], 
+                learnings: ["Cloud Database Management.", "Data validation techniques.", "Database indexing for performance."], 
+                images: [
+                    "https://images.unsplash.com/photo-1544383335-c533c4a98ccd?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1451187534639-248002e065f3?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 10,
-                week: "Week 10",
-                dates: "Dec 03 - Dec 07",
-                summary: "User Acceptance Testing (UAT) and Feedback loops.",
-                content: "Conducted live testing sessions with the end-users. I gathered qualitative data on the dashboard's usability and identified three critical navigation pain points.",
-                tasks: ["User Interview facilitation", "Heatmap Analysis", "Bug reporting from feedback", "Feature request prioritization"],
-                challenges: ["Translating non-technical feedback into dev tickets.", "Managing conflicting feature requests."],
-                learnings: ["User-Centric Design.", "Usability Testing protocols.", "Empathy in Engineering."],
-                image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 10, week: "Week 10", dates: "Dec 03 - Dec 07", summary: "User Acceptance Testing (UAT) and Feedback loops.", 
+                content: "Conducted live testing sessions with the end-users. I gathered qualitative data on the dashboard's usability and identified three critical navigation pain points.", 
+                tasks: ["User Interview facilitation", "Heatmap Analysis", "Bug reporting from feedback", "Feature request prioritization"], 
+                challenges: ["Translating non-technical feedback into dev tickets.", "Managing conflicting feature requests."], 
+                learnings: ["User-Centric Design.", "Usability Testing protocols.", "Empathy in Engineering."], 
+                images: [
+                    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 11,
-                week: "Week 11",
-                dates: "Dec 10 - Dec 14",
-                summary: "CI/CD Pipeline automation and Production prep.",
-                content: "Participated in setting up the final GitHub Actions workflow to automate deployment to the staging server. This included automated linting and build checks.",
-                tasks: ["GitHub Actions workflow setup", "Deployment script debugging", "Environment Secret management", "Production checklist review"],
-                challenges: ["Troubleshooting build failures in the CI runner.", "Managing environment-specific configurations."],
-                learnings: ["DevOps culture.", "Automated Deployment pipelines.", "Secret management security."],
-                image: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 11, week: "Week 11", dates: "Dec 10 - Dec 14", summary: "CI/CD Pipeline automation and Production prep.", 
+                content: "Participated in setting up the final GitHub Actions workflow to automate deployment to the staging server. This included automated linting and build checks.", 
+                tasks: ["GitHub Actions workflow setup", "Deployment script debugging", "Environment Secret management", "Production checklist review"], 
+                challenges: ["Troubleshooting build failures in the CI runner.", "Managing environment-specific configurations."], 
+                learnings: ["DevOps culture.", "Automated Deployment pipelines.", "Secret management security."], 
+                images: [
+                    "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800"
+                ] 
             },
-            {
-                id: 12,
-                week: "Week 12",
-                dates: "Dec 17 - Dec 21",
-                summary: "Final Handover, Documentation, and Exit Reflection.",
-                content: "Wrapped up all pending tasks. I spent the final week documenting every feature I built and held a handover session with the maintenance team.",
-                tasks: ["Final Technical Documentation", "Handover Meeting presentation", "Workspace cleanup", "Exit Interview preparation"],
-                challenges: ["Ensuring all documentation was clear for non-authors.", "Saying goodbye to a great team."],
-                learnings: ["Knowledge Transfer (KT) processes.", "Professional closure.", "Refining the personal career roadmap."],
-                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 12, week: "Week 12", dates: "Dec 17 - Dec 21", summary: "Final Handover, Documentation, and Exit Reflection.", 
+                content: "Wrapped up all pending tasks. I spent the final week documenting every feature I built and held a handover session with the maintenance team.", 
+                tasks: ["Final Technical Documentation", "Handover Meeting presentation", "Workspace cleanup", "Exit Interview preparation"], 
+                challenges: ["Ensuring all documentation was clear for non-authors.", "Saying goodbye to a great team."], 
+                learnings: ["Knowledge Transfer (KT) processes.", "Professional closure.", "Refining the personal career roadmap."], 
+                images: [
+                    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800"
+                ] 
             }
         ];
 
+        let isMenuOpen = false;
+        let currentSlideIndex = 0;
+
+        function toggleMobileMenu() {
+            const dropdown = document.getElementById('mobileDropdown');
+            const menuIcon = document.getElementById('menuIcon');
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                dropdown.classList.add('show');
+                menuIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
+            } else {
+                dropdown.classList.remove('show');
+                menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if (isMenuOpen && !e.target.closest('#mobileDropdown') && !e.target.closest('button[onclick="toggleMobileMenu()"]')) {
+                toggleMobileMenu();
+            }
+        });
+
         function navigateTo(pageId) {
+            if (isMenuOpen) toggleMobileMenu();
+            
             document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
             document.getElementById(`page-${pageId}`).classList.remove('hidden');
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active'));
@@ -424,15 +576,16 @@
         function renderReports() {
             const grid = document.getElementById('reportsGrid');
             if (!grid) return;
+            // Use first image as thumbnail
             grid.innerHTML = reports.map(r => `
-                <div class="report-card p-8 group relative flex flex-col h-full bg-white dark:bg-surface-dark">
+                <div class="report-card p-8 group relative flex flex-col h-full dark:bg-surface-dark">
                     <div class="flex justify-between items-center mb-6">
                         <div class="w-10 h-1 bg-accent-yellow group-hover:w-16 transition-all duration-500 rounded-full"></div>
                         <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 pl-4">${r.dates}</span>
                     </div>
                     <h4 class="text-2xl font-black mb-4 uppercase leading-none text-slate-900 dark:text-slate-100 group-hover:text-accent-yellow transition-colors">${r.week}</h4>
                     <p class="text-[11px] text-slate-600 dark:text-slate-400 font-bold mb-8 leading-relaxed">${r.summary}</p>
-                    <div class="mt-auto">
+                    <div class="mt-auto pt-6">
                         <button onclick="viewDetail(${r.id})" class="text-[10px] font-black uppercase tracking-widest flex items-center hover:text-accent-yellow transition-all text-slate-900 dark:text-slate-100">
                             Open Details <i class="fa-solid fa-arrow-right-long ml-3 transform group-hover:translate-x-2 transition-transform"></i>
                         </button>
@@ -446,6 +599,8 @@
             const content = document.getElementById('detailContent');
             if (!r || !content) return;
             
+            currentSlideIndex = 0;
+            
             content.innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                     <div class="lg:col-span-8">
@@ -458,18 +613,16 @@
                                     <h3 class="text-[10px] font-black mb-4 uppercase text-slate-400 tracking-widest">Weekly Mission</h3>
                                     <p class="text-slate-800 dark:text-slate-200 text-lg leading-relaxed font-bold">${r.content}</p>
                                 </section>
-
                                 <section>
                                     <h3 class="text-[10px] font-black mb-4 uppercase text-slate-400 tracking-widest">Primary Activities</h3>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         ${r.tasks.map(t => `<div class="p-4 bg-slate-50 dark:bg-onyx rounded-xl font-bold flex items-center text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-white/5 text-xs"><i class="fa-solid fa-bolt text-accent-yellow mr-4"></i> ${t}</div>`).join('')}
                                     </div>
                                 </section>
-
                                 <section>
                                     <h3 class="text-[10px] font-black mb-4 uppercase text-slate-400 tracking-widest">Obstacles Overcome</h3>
                                     <div class="space-y-3">
-                                        ${r.challenges.map(c => `<p class="text-xs font-bold text-slate-600 dark:text-slate-400"><i class="fa-solid fa-triangle-exclamation text-red-500 mr-3"></i> ${c}</p>`).join('')}
+                                        ${r.challenges.map(c => `<p class="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center"><i class="fa-solid fa-triangle-exclamation text-red-500 mr-3"></i> ${c}</p>`).join('')}
                                     </div>
                                 </section>
                             </div>
@@ -479,16 +632,93 @@
                         <div class="bg-accent-yellow p-8 rounded-[2rem] text-black shadow-lg">
                             <h4 class="font-black uppercase mb-4 tracking-widest text-[10px] border-b border-black/10 pb-2">Key Competencies</h4>
                             <ul class="space-y-3 text-xs font-bold">
-                                ${r.learnings.map(l => `<li class="flex items-start">0${r.learnings.indexOf(l)+1}. ${l}</li>`).join('')}
+                                ${r.learnings.map((l, i) => `<li class="flex items-start">0${i+1}. ${l}</li>`).join('')}
                             </ul>
                         </div>
-                        <div class="rounded-[2rem] overflow-hidden shadow-md border-2 border-white dark:border-surface-dark">
-                            <img src="${r.image}" class="w-full h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Evidence">
+                        
+                        <!-- Premium Carousel -->
+                        <div class="carousel-container shadow-2xl border-2 border-white dark:border-surface-dark group/carousel">
+                            <div class="carousel-track" id="carouselTrack">
+                                ${r.images.map(img => `
+                                    <div class="carousel-slide">
+                                        <img src="${img}" alt="Weekly Evidence" loading="lazy">
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <!-- Carousel Controls -->
+                            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 opacity-0 group-hover/carousel:opacity-100 transition-opacity pointer-events-none">
+                                <button onclick="moveCarousel(-1)" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20 hover:bg-accent-yellow hover:text-black transition-all flex items-center justify-center pointer-events-auto">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button onclick="moveCarousel(1)" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20 hover:bg-accent-yellow hover:text-black transition-all flex items-center justify-center pointer-events-auto">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                            <!-- Carousel Indicators -->
+                            <div class="absolute bottom-6 inset-x-0 flex justify-center space-x-2">
+                                ${r.images.map((_, i) => `
+                                    <button onclick="jumpToSlide(${i})" id="dot-${i}" class="carousel-dot w-2 h-2 rounded-full bg-white/30 transition-all ${i === 0 ? 'bg-accent-yellow w-6' : ''}"></button>
+                                `).join('')}
+                            </div>
+
+                            <!-- Count Overlay -->
+                            <div class="absolute top-4 left-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-tighter">
+                                <span id="currentSlideNum">1</span> / ${r.images.length} Evidence
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
             navigateTo('detail');
+        }
+
+        function moveCarousel(direction) {
+            const track = document.getElementById('carouselTrack');
+            const totalSlides = track.children.length;
+            
+            currentSlideIndex = (currentSlideIndex + direction + totalSlides) % totalSlides;
+            updateCarouselUI();
+        }
+
+        function jumpToSlide(index) {
+            currentSlideIndex = index;
+            updateCarouselUI();
+        }
+
+        function updateCarouselUI() {
+            const track = document.getElementById('carouselTrack');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const numDisplay = document.getElementById('currentSlideNum');
+            
+            if (!track) return;
+
+            track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                if (i === currentSlideIndex) {
+                    dot.classList.add('bg-accent-yellow', 'w-6');
+                    dot.classList.remove('bg-white/30');
+                } else {
+                    dot.classList.remove('bg-accent-yellow', 'w-6');
+                    dot.classList.add('bg-white/30');
+                }
+            });
+
+            if (numDisplay) numDisplay.innerText = currentSlideIndex + 1;
+        }
+
+        function copyToClipboard(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
         const themeToggle = document.getElementById('themeToggle');

@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angela | OJT Creative Portfolio</title>
-    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -32,219 +29,55 @@
     </script>
     <style>
         html { scroll-behavior: smooth; }
-        body { 
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-        
-        .sticky-nav {
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        .giant-text {
-            font-weight: 900;
-            line-height: 0.95;
-            letter-spacing: -0.04em;
-            text-transform: uppercase;
-        }
-
-        .report-card {
-            border-radius: 1.25rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0,0,0,0.05);
-            background: white;
-        }
-        .dark .report-card { 
-            border-color: rgba(255,255,255,0.05);
-            background: #1A1A1A;
-        }
-
-        .report-card:hover {
-            border-color: #FFB400;
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-        }
-
-        .progress-bar-custom {
-            height: 10px;
-            border-radius: 10px;
-            background: rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
+        body { transition: background-color 0.4s ease, color 0.4s ease; }
+        .sticky-nav { backdrop-filter: blur(12px); z-index: 100; transition: all 0.3s ease; }
+        .giant-text { font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; }
+        .report-card { border-radius: 1.25rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(0,0,0,0.05); background: white; }
+        .dark .report-card { border-color: rgba(255,255,255,0.05); background: #1A1A1A; }
+        .report-card:hover { border-color: #FFB400; transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .progress-bar-custom { height: 10px; border-radius: 10px; background: rgba(0,0,0,0.05); overflow: hidden; }
         .dark .progress-bar-custom { background: rgba(255,255,255,0.05); }
-
-        .page-transition {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .nav-active {
-            color: #FFB400;
-            position: relative;
-        }
-        .nav-active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #FFB400;
-        }
-
-        #mobileDropdown {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(-10px);
-            opacity: 0;
-            visibility: hidden;
-        }
-        #mobileDropdown.show {
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 2rem;
-            background: #f0f0f0;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-        }
-        .carousel-slide {
-            min-width: 100%;
-            height: 400px;
-        }
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: none !important;
-        }
-
-        /* Resume Styling */
-        .resume-section-line {
-            border-left: 2px solid rgba(255, 180, 0, 0.2);
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        .resume-section-line::before {
-            content: '';
-            position: absolute;
-            left: -5px;
-            top: 0;
-            width: 8px;
-            height: 8px;
-            background: #FFB400;
-            border-radius: 50%;
-        }
-
-        /* Profile Image logic */
-        .profile-img-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1/1.25;
-            border-radius: 2rem;
-            overflow: hidden;
-            background: #eee;
-            border: 4px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .dark .profile-img-container {
-            border-color: #1A1A1A;
-        }
-        .profile-img-container img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .profile-img-secondary {
-            opacity: 0;
-            transform: scale(1.05);
-        }
-        .profile-img-container:hover .profile-img-primary {
-            opacity: 0;
-            transform: scale(1.05);
-        }
-        .profile-img-container:hover .profile-img-secondary {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .skill-tag {
-            background: rgba(0,0,0,0.03);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            color: #555;
-            transition: all 0.3s ease;
-        }
+        .page-transition { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-active { color: #FFB400; position: relative; }
+        .nav-active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #FFB400; }
+        #mobileDropdown { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(-10px); opacity: 0; visibility: hidden; }
+        #mobileDropdown.show { transform: translateY(0); opacity: 1; visibility: visible; }
+        .carousel-container { position: relative; overflow: hidden; border-radius: 2rem; background: #f0f0f0; }
+        .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+        .carousel-slide { min-width: 100%; height: 400px; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .resume-section-line { border-left: 2px solid rgba(255, 180, 0, 0.2); padding-left: 1.5rem; position: relative; }
+        .resume-section-line::before { content: ''; position: absolute; left: -5px; top: 0; width: 8px; height: 8px; background: #FFB400; border-radius: 50%; }
+        .profile-img-container { position: relative; width: 100%; aspect-ratio: 1/1.25; border-radius: 2rem; overflow: hidden; background: #eee; border: 4px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .dark .profile-img-container { border-color: #1A1A1A; }
+        .profile-img-container img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s, transform 0.6s; }
+        .profile-img-secondary { opacity: 0; transform: scale(1.05); }
+        .profile-img-container:hover .profile-img-primary { opacity: 0; transform: scale(1.05); }
+        .profile-img-container:hover .profile-img-secondary { opacity: 1; transform: scale(1); }
+        .skill-tag { background: rgba(0,0,0,0.03); padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; color: #555; transition: all 0.3s ease; }
         .dark .skill-tag { background: rgba(255,255,255,0.05); color: #ccc; }
-        .skill-tag:hover {
-            background: #FFB400;
-            color: #000;
-        }
-
-        .toast {
-            visibility: hidden;
-            min-width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 12px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .toast.show {
-            visibility: visible;
-            animation: fadeinout 2s forwards;
-        }
-        @keyframes fadeinout {
-            0% { opacity: 0; bottom: 0; }
-            20% { opacity: 1; bottom: 30px; }
-            80% { opacity: 1; bottom: 30px; }
-            100% { opacity: 0; bottom: 0; }
-        }
+        .skill-tag:hover { background: #FFB400; color: #000; }
+        .toast { visibility: hidden; min-width: 200px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .toast.show { visibility: visible; animation: fadeinout 2s forwards; }
+        @keyframes fadeinout { 0% { opacity: 0; bottom: 0; } 20% { opacity: 1; bottom: 30px; } 80% { opacity: 1; bottom: 30px; } 100% { opacity: 0; bottom: 0; } }
     </style>
 </head>
 <body class="bg-bg-light text-slate-900 dark:bg-onyx dark:text-slate-100 font-sans overflow-x-hidden">
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast">Copied to clipboard!</div>
 
- <!-- Navigation -->
- <nav class="fixed top-0 w-full sticky-nav py-4 bg-white/80 dark:bg-onyx/80 border-b border-black/5 dark:border-white/5 z-[150]">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between relative">
-        <div class="flex items-center space-x-3 group cursor-pointer" onclick="navigateTo('home')">
-            <div class="w-8 h-8 bg-accent-yellow rounded-lg rotate-12 group-hover:rotate-0 transition-transform"></div>
-            <span class="text-xl font-black tracking-tight uppercase">ANGELA.</span>
-        </div>
+    <nav class="fixed top-0 w-full sticky-nav py-4 bg-white/80 dark:bg-onyx/80 border-b border-black/5 dark:border-white/5 z-[150]">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between relative">
+            <div class="flex items-center space-x-3 group cursor-pointer" onclick="navigateTo('home')">
+                <div class="w-8 h-8 bg-accent-yellow rounded-lg rotate-12 group-hover:rotate-0 transition-transform"></div>
+                <span class="text-xl font-black tracking-tight uppercase">ANGELA.</span>
+            </div>
             
-            <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-8 text-[11px] font-black uppercase tracking-widest">
                 <button onclick="navigateTo('home')" id="nav-home" class="nav-active hover:text-accent-yellow transition-colors">Home</button>
                 <button onclick="navigateTo('reports')" id="nav-reports" class="hover:text-accent-yellow transition-colors">Weekly Reports</button>
-                <button onclick="navigateTo('about')" id="nav-about" class="hover:text-accent-yellow transition-colors">About Me</button>
+           
             </div>
 
             <div class="flex items-center space-x-3">
@@ -252,57 +85,40 @@
                     <i class="fa-solid fa-moon dark:hidden text-slate-600"></i>
                     <i class="fa-solid fa-sun hidden dark:block text-accent-yellow"></i>
                 </button>
-
-                <!-- Mobile Menu Toggle -->
                 <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400">
                     <i class="fa-solid fa-bars-staggered" id="menuIcon"></i>
                 </button>
             </div>
 
-            <!-- Mobile Dropdown -->
             <div id="mobileDropdown" class="absolute top-full right-6 mt-4 w-56 bg-white dark:bg-surface-dark rounded-2xl shadow-2xl border border-black/5 dark:border-white/5 py-4 px-2 md:hidden">
                 <div class="flex flex-col space-y-1">
-                    <button onclick="navigateTo('home')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
-                        <i class="fa-solid fa-house text-accent-yellow w-5"></i>
-                        <span>Home</span>
+                    <button onclick="navigateTo('home')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest">
+                        <i class="fa-solid fa-house text-accent-yellow w-5"></i><span>Home</span>
                     </button>
-                    <button onclick="navigateTo('reports')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
-                        <i class="fa-solid fa-book text-accent-yellow w-5"></i>
-                        <span>Weekly Reports</span>
+                    <button onclick="navigateTo('reports')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest">
+                        <i class="fa-solid fa-book text-accent-yellow w-5"></i><span>Weekly Reports</span>
                     </button>
-                    <button onclick="navigateTo('about')" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-onyx text-left text-[11px] font-black uppercase tracking-widest transition-colors">
-                        <i class="fa-solid fa-user text-accent-yellow w-5"></i>
-                        <span>About Me</span>
-                    </button>
+                
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Page Content Containers -->
     <main class="pt-28 max-w-6xl mx-auto px-6 pb-20">
         
         <!-- HOME PAGE -->
         <div id="page-home" class="page-transition">
             <section class="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20 py-8 mb-16">
                 <div class="w-full lg:max-w-xl text-center lg:text-left">
-                    <div class="inline-block bg-accent-yellow px-3 py-1 rounded-md text-[10px] font-black mb-6 text-black uppercase tracking-widest">
-                        Internship Portfolio
-                    </div>
-                    <h1 class="giant-text text-5xl md:text-7xl lg:text-8xl mb-6 leading-none text-slate-900 dark:text-white">
-                        OJT<br>PORT<br><span class="text-accent-yellow">FOLIO.</span>
-                    </h1>
-                    <p class="text-slate-700 dark:text-slate-400 max-w-sm mx-auto lg:mx-0 font-bold text-lg leading-relaxed mb-8">
-                        Hello. I'm Angela, an IT student documenting 486 hours of growth, coding, and exploration in a professional corporate environment.
-                    </p>
-                    <button onclick="navigateTo('reports')" class="bg-accent-yellow text-black font-black px-8 py-4 rounded-xl text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-accent-yellow/20">
-                        View Journal
-                    </button>
+                    <div class="inline-block bg-accent-yellow px-3 py-1 rounded-md text-[10px] font-black mb-6 text-black uppercase tracking-widest">Internship Portfolio</div>
+                    <h1 class="giant-text text-5xl md:text-7xl lg:text-8xl mb-6 leading-none text-slate-900 dark:text-white">OJT<br>PORT<br><span class="text-accent-yellow">FOLIO.</span></h1>
+                    <p class="text-slate-700 dark:text-slate-400 max-w-sm mx-auto lg:mx-0 font-bold text-lg leading-relaxed mb-8">Hello, I’m Angela, an IT student documenting 486 hours of growth, learning, and real-world experience during my internship journey.</p>
+                    <button onclick="navigateTo('reports')" class="bg-accent-yellow text-black font-black px-8 py-4 rounded-xl text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-accent-yellow/20">View Journal</button>
                 </div>
                 <div class="relative">
                     <div class="absolute inset-0 bg-accent-yellow translate-x-4 translate-y-4 rounded-[2.5rem] -z-10 shadow-xl opacity-80"></div>
                     <div class="w-64 h-80 lg:w-80 lg:h-96 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-surface-dark">
-                        <img src="images/angela.jpg" alt="Angela" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=Angela&background=FFB400&color=000&size=400'">
+                        <img src="images/angela.jpg" alt="Angela" class="w-full h-full object-cover">
                     </div>
                 </div>
             </section>
@@ -322,148 +138,15 @@
         </div>
 
         <!-- REPORTS PAGE -->
-        <div id="page-reports" class="hidden page-transition">
+        <div id="page-reports" class="hidden page-transition"> 
             <div class="flex flex-col md:flex-row items-center justify-between mb-12 gap-4">
-                <h2 class="giant-text text-5xl text-slate-900 dark:text-white">The Narrative Journal</h2>
+                <h2 class="giant-text text-5xl text-slate-900 dark:text-white">Narrative Journal</h2>
                 <div class="text-center md:text-right">
-                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Archive 2025</p>
+                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Archive 2026</p>
                     <p class="text-sm font-black text-accent-yellow uppercase">Weekly Milestones</p>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="reportsGrid"></div>
-        </div>
-
-        <!-- ABOUT ME (RESUME) PAGE -->
-        <div id="page-about" class="hidden page-transition">
-            <div class="mb-8">
-                <h2 class="giant-text text-4xl text-slate-900 dark:text-white uppercase tracking-tighter">ABOUT <span class="text-accent-yellow">ME.</span></h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Left Sidebar Column (Sidebar - Compact) -->
-                <div class="lg:col-span-3 space-y-6">
-                    <div class="profile-img-container">
-                        <img src="images/angela-resume-1.jpg" alt="Angela Portrait" class="profile-img-primary" onerror="this.src='https://ui-avatars.com/api/?name=Angela&background=FFB400&color=000&size=600'">
-                        <img src="images/angela-resume-2.jpg" alt="Angela Lifestyle" class="profile-img-secondary" onerror="this.src='https://ui-avatars.com/api/?name=IT+Pro&background=1A1A1A&color=fff&size=600'">
-                    </div>
-
-                    <!-- Skills Card -->
-                    <div class="bg-white dark:bg-surface-dark p-6 rounded-[2rem] border border-black/5 dark:border-white/5">
-                        <h3 class="text-[10px] font-black uppercase tracking-widest mb-3 text-accent-yellow">Skills</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <p class="text-[8px] font-black uppercase mb-1.5 text-slate-400">Stack</p>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="skill-tag">HTML/CSS</span>
-                                    <span class="skill-tag">JS</span>
-                                    <span class="skill-tag">Tailwind</span>
-                                    <span class="skill-tag">React</span>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="text-[8px] font-black uppercase mb-1.5 text-slate-400">Creative</p>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="skill-tag">Figma</span>
-                                    <span class="skill-tag">PS</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Languages -->
-                    <div class="bg-white dark:bg-surface-dark p-6 rounded-[2rem] border border-black/5 dark:border-white/5">
-                        <h3 class="text-[10px] font-black uppercase tracking-widest mb-3 text-accent-yellow">Languages</h3>
-                        <div class="space-y-2 text-[9px] font-bold">
-                            <div class="flex justify-between uppercase"><span>English</span><span class="text-slate-400">Professional</span></div>
-                            <div class="flex justify-between uppercase"><span>Filipino</span><span class="text-slate-400">Native</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Contact -->
-                    <div class="bg-slate-900 p-6 rounded-[2rem] text-white">
-                        <h3 class="text-[10px] font-black uppercase mb-3 text-accent-yellow tracking-widest">Connect</h3>
-                        <div class="space-y-2.5 text-[9px] font-bold">
-                            <button onclick="copyToClipboard('angela.ojt@email.com')" class="flex items-center text-slate-400 hover:text-white transition-colors w-full truncate text-left">
-                                <i class="fa-solid fa-envelope mr-2"></i> angela.ojt@email.com
-                            </button>
-                            <p class="flex items-center text-slate-400">
-                                <i class="fa-solid fa-location-dot mr-2"></i> Manila, PH
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Main Column (Resume Body) -->
-                <div class="lg:col-span-9 space-y-6">
-                    <!-- Summary (Minimized padding and text) -->
-                    <div class="bg-white dark:bg-surface-dark p-6 md:p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5">
-                        <h3 class="text-sm font-black uppercase mb-4 flex items-center">
-                            <i class="fa-solid fa-user-circle text-accent-yellow mr-3 opacity-50"></i> Profile Summary
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-bold">
-                            Aspiring BS Information Technology student with a strong foundation in systems development and UI/UX design. Highly motivated to apply technical knowledge in a corporate environment, evidenced by 486 completed internship hours focusing on front-end optimization and responsive web architecture.
-                        </p>
-                    </div>
-
-                    <!-- Education (Now First) -->
-                    <div class="bg-white dark:bg-surface-dark p-6 md:p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5">
-                        <h3 class="text-sm font-black uppercase mb-6 flex items-center">
-                            <i class="fa-solid fa-graduation-cap text-accent-yellow mr-3"></i> Education
-                        </h3>
-                        <div class="space-y-4">
-                            <div class="resume-section-line pb-4">
-                                <div class="flex justify-between items-start mb-0.5">
-                                    <h4 class="text-sm font-black uppercase text-slate-900 dark:text-white">Bicol University</h4>
-                                    <span class="text-[9px] font-black text-accent-yellow">2022 - 2026</span>
-                                </div>
-                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">BS in Information Technology</p>
-                                <ul class="text-[10px] font-bold text-slate-400 space-y-0.5">
-                                    <li>• Dean's Lister (2nd Semester A.Y 2023-2024)</li>
-                                    <li>• Dean's Lister (2nd Semester A.Y 2024-2025)</li>
-                                </ul>
-                            </div>
-                            <div class="resume-section-line pb-4">
-                                <div class="flex justify-between items-start mb-0.5">
-                                    <h4 class="text-sm font-black uppercase text-slate-900 dark:text-white">Oro Site High School</h4>
-                                    <span class="text-[9px] font-black text-slate-400">2016 - 2022</span>
-                                </div>
-                                <ul class="text-[10px] font-bold text-slate-400">
-                                    <li>• With Honors (Senior High School)</li>
-                                </ul>
-                            </div>
-                            <div class="resume-section-line">
-                                <div class="flex justify-between items-start mb-0.5">
-                                    <h4 class="text-sm font-black uppercase text-slate-900 dark:text-white">Victory Village Elementary School</h4>
-                                    <span class="text-[9px] font-black text-slate-400">2009 - 2016</span>
-                                </div>
-                                <ul class="text-[10px] font-bold text-slate-400">
-                                    <li>• With Honors</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Internship Experience -->
-                    <div class="bg-white dark:bg-surface-dark p-6 md:p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5">
-                        <h3 class="text-sm font-black uppercase mb-6 flex items-center">
-                            <i class="fa-solid fa-briefcase text-accent-yellow mr-3"></i> Experience
-                        </h3>
-                        <div class="resume-section-line">
-                            <div class="flex justify-between items-start mb-0.5">
-                                <h4 class="text-sm font-black uppercase">IT Development Intern</h4>
-                                <span class="text-[9px] font-black text-accent-yellow uppercase">Current</span>
-                            </div>
-                            <p class="text-xs font-bold text-slate-500 uppercase mb-3">Enterprise Solutions | 486 Hours</p>
-                            <ul class="text-xs font-bold text-slate-600 dark:text-slate-400 space-y-1.5">
-                                <li>- Orchestrated UI refactoring for client-facing dashboards.</li>
-                                <li>- Collaborated on Git-based version control workflows.</li>
-                                <li>- Documented system performance and core web vitals.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- DETAIL VIEW -->
@@ -475,39 +158,54 @@
         </div>
     </main>
 
-    <!-- Site Footer -->
     <footer id="mainFooter" class="py-16 bg-slate-900 text-white text-center">
         <h2 class="giant-text text-4xl mb-6">Let's Connect :</h2>
         <div class="flex flex-col items-center space-y-3 font-bold text-sm text-slate-400 mb-8">
             <button onclick="copyToClipboard('angela.ojt@email.com')" class="group flex items-center hover:text-white transition-colors">
-                <i class="fa-solid fa-envelope mr-3 text-accent-yellow group-hover:scale-110 transition-transform"></i> 
-                angela.ojt@email.com
+                <i class="fa-solid fa-envelope mr-3 text-accent-yellow group-hover:scale-110 transition-transform"></i> angelaabadjanuary@gmail.com
             </button>
-            <p><i class="fa-solid fa-location-dot mr-3 text-accent-yellow"></i> Manila, Philippines</p>
+            <p><i class="fa-solid fa-location-dot mr-3 text-accent-yellow"></i> Legazpi City, Albay</p>
         </div>
-        <p class="text-slate-600 text-[9px] font-black uppercase tracking-widest">© ANGELA BSIT • 2025</p>
+        <p class="text-slate-600 text-[9px] font-black uppercase tracking-widest">© ANGELA B. ABAD • 2026</p>
     </footer>
 
     <script>
         const reports = [
-            { id: 1, week: "Week 01", dates: "Oct 01 - Oct 05", summary: "Foundation phase: Orientation and dev synchronization.", content: "Established technical alignment using internal Docker containers and established a unified Git flow with the senior development team.", tasks: ["General Orientation", "Setup Docker & VS Code", "Reviewed Project Briefings", "Git Access Configuration", "Team Introductions"], challenges: ["Navigating the scale of the enterprise repository.", "Syncing environment variables for legacy systems."], learnings: ["Docker environment isolation.", "Collaborative Git branching strategies.", "Professional office etiquette."], images: ["https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800", "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800", "https://images.unsplash.com/photo-1550439062-609e1531270e?w=800", "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800", "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800"] },
-            { id: 2, week: "Week 02", dates: "Oct 08 - Oct 12", summary: "UI component architecture and responsiveness.", content: "Owned the internal dashboard's navigation module refactor, optimizing for high-density information display using Tailwind CSS.", tasks: ["Navigation Tree Refactor", "Tailwind Theme Injection", "Unit Testing UI Components", "UX Audit for Mobile"], challenges: ["Balancing vertical space with menu density.", "Ensuring accessibility for color-blind users."], learnings: ["Responsive Typography Hierarchy.", "Component Encapsulation.", "WCAG Accessibility Standards."], images: ["https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800", "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=800", "https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=800", "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800", "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"] },
-            { id: 3, week: "Week 03", dates: "Oct 15 - Oct 19", summary: "API integration and database logic mapping.", content: "Mapped data flow from PostgreSQL through Node.js API to the frontend state management system.", tasks: ["REST API Testing (Postman)", "State Store Refactor", "Database Query Debugging", "WebSocket Event Handling"], challenges: ["Handling race conditions in async fetching.", "Debugging complex SQL joins."], learnings: ["Data Normalization.", "Asynchronous State Control.", "API Security Headers."], images: ["https://images.unsplash.com/photo-1558494949-ef010cbdcc48?w=800", "https://images.unsplash.com/photo-1544383335-c533c4a98ccd?w=800", "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800", "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800", "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800"] },
-            { id: 4, week: "Week 04", dates: "Oct 22 - Oct 26", summary: "Visual asset optimization and collateral design.", content: "Assisted the marketing team in optimizing high-resolution assets for web performance using Adobe CC.", tasks: ["Asset Compression", "Instructional Video Editing", "Figma System Maintenance", "SVG Cleaning"], challenges: ["Reducing size without losing clarity.", "Maintaining brand consistency."], learnings: ["WebP/AVIF formats.", "Video pacing.", "Figma Auto-layouts."], images: ["https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=800", "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800", "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800", "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800", "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=800"] },
-            { id: 5, week: "Week 05", dates: "Oct 29 - Nov 02", summary: "Advanced Performance and Core Web Vitals audit.", content: "Deep-dived into Chrome DevTools to optimize Largest Contentful Paint (LCP) and First Input Delay (FID).", tasks: ["Lighthouse Performance Audit", "Lazy Loading Implementation", "Critical CSS Path Analysis", "Image CDN integration"], challenges: ["Isolating third-party scripts.", "Balancing interactivity with load speed."], learnings: ["Core Web Vitals metrics.", "Browser rendering pipelines.", "Async/Defer script execution."], images: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800", "https://images.unsplash.com/photo-1504868584819-f8e90526ef49?w=800", "https://images.unsplash.com/photo-1551288049-bbbda536339a?w=800", "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800", "https://images.unsplash.com/photo-1454165833221-d7d176b7c205?w=800"] },
-            { id: 6, week: "Week 06", dates: "Nov 05 - Nov 09", summary: "Unit Testing and Quality Assurance automation.", content: "Ensured codebase stability by writing robust unit tests using Jest and React Testing Library.", tasks: ["Jest Unit Tests", "Integration Testing", "Bug Regression Tracking", "Continuous Integration"], challenges: ["Mocking complex API dependencies.", "Testing edge cases in data validation."], learnings: ["Test-Driven Development (TDD).", "Mocking vs Spying.", "Code Coverage importance."], images: ["https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800", "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800", "https://images.unsplash.com/photo-1534665482403-a909d0d97c67?w=800", "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=800", "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800"] },
-            { id: 7, week: "Week 07", dates: "Nov 12 - Nov 16", summary: "Backend Security hardening and Authentication.", content: "Assisted in reviewing JWT implementation and ensuring CORS policies were strictly enforced.", tasks: ["JWT Refresh Logic", "CORS Configuration", "Rate Limiting Testing", "Security Headers"], challenges: ["Debugging token expiry.", "Securing sensitive user routes."], learnings: ["OAuth2 flow concepts.", "XSS prevention.", "Secure cookie management."], images: ["https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800", "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800", "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800", "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?w=800", "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800"] },
-            { id: 8, week: "Week 08", dates: "Nov 19 - Nov 23", summary: "Design System expansion and Iconography.", content: "Created a custom set of UI icons for the internal administrative toolkit using Figma.", tasks: ["Custom SVG Icons", "Component Library Update", "Stakeholder Prototypes", "Style Guide Documentation"], challenges: ["Ensuring visual consistency.", "Creating scalable SVG paths."], learnings: ["Grid-based systems.", "Micro-interactions in UI.", "Vector optimization."], images: ["https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=800", "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800", "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800", "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800", "https://images.unsplash.com/photo-1522542550221-31fd19056126?w=800"] },
-            { id: 9, week: "Week 09", dates: "Nov 26 - Nov 30", summary: "Database migration and Data Integrity checking.", content: "Assisted in migrating the local database to the production cloud instance with custom audit scripts.", tasks: ["Data Mapping Verification", "Migration Script Testing", "Database Indexing Audit", "Backup Simulation"], challenges: ["Mapping legacy structures.", "Handling data type mismatches."], learnings: ["Cloud Database Management.", "Data validation.", "Indexing for performance."], images: ["https://images.unsplash.com/photo-1544383335-c533c4a98ccd?w=800", "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?w=800", "https://images.unsplash.com/photo-1451187534639-248002e065f3?w=800", "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800", "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"] },
-            { id: 10, week: "Week 10", dates: "Dec 03 - Dec 07", summary: "User Acceptance Testing (UAT) and Feedback loops.", content: "Conducted live testing sessions with end-users to identify critical navigation pain points.", tasks: ["User Interview Facilitation", "Heatmap Analysis", "Bug Reporting", "Feature Prioritization"], challenges: ["Translating feedback to tickets.", "Managing conflicting requests."], learnings: ["User-Centric Design.", "Testing protocols.", "Empathy in Engineering."], images: ["https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800", "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800", "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800", "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800"] },
-            { id: 11, week: "Week 11", dates: "Dec 10 - Dec 14", summary: "CI/CD Pipeline automation and Production prep.", content: "Participated in setting up GitHub Actions workflow to automate deployment to staging.", tasks: ["GitHub Actions Setup", "Deployment Script Debugging", "Secret Management", "Production Checklist"], challenges: ["Troubleshooting build failures.", "Managing environment configs."], learnings: ["DevOps culture.", "Deployment pipelines.", "Secret management."], images: ["https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=800", "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=800", "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800", "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800", "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800"] },
-            { id: 12, week: "Week 12", dates: "Dec 17 - Dec 21", summary: "Final Handover, Documentation, and Exit Reflection.", content: "Wrapped up all pending tasks and held a handover session with the maintenance team.", tasks: ["Final Documentation", "Handover Presentation", "Workspace Cleanup", "Exit Interview Prep"], challenges: ["Ensuring documentation clarity.", "Saying goodbye to the team."], learnings: ["Knowledge Transfer (KT).", "Professional closure.", "Career roadmap refinement."], images: ["https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800", "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800", "https://images.unsplash.com/photo-1552581234-26160f608093?w=800", "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800", "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800"] }
+            { id: 1, week: "Week 01", content: "During the first week of our On-the-Job Training, we were introduced to the office environment, daily workflows, and overall operations under our mentor, Dean Serrano. We were oriented about the different offices inside BUCS, the staff members, and their respective roles and functions. This helped us become familiar with how the office is structured and how different tasks are coordinated among personnel. We were also assigned to route documents to the appropriate offices, which gave us our first hands-on experience in handling office paperwork and understanding proper document flow. In addition, we assisted in preparing an Environmental Science presentation requested by Ma’am Joy, which helped us develop our skills in presentation design and content organization. Through these tasks, we gained initial exposure to real office work and learned how important communication and accuracy are in completing assigned responsibilities.", images: ["https://placehold.co/800x600/111/fff?text=Week+1+Img+1", "https://placehold.co/800x600/111/fff?text=Week+1+Img+2", "https://placehold.co/800x600/111/fff?text=Week+1+Img+3", "https://placehold.co/800x600/111/fff?text=Week+1+Img+4", "https://placehold.co/800x600/111/fff?text=Week+1+Img+5"] },
+            { id: 2, week: "Week 02", content: "We were assigned by the secretary to redesign the Course Syllabus cover for each department in BUCS using Canva. We coordinated closely with the secretary to ensure that all required details and elements were properly included in the layout. This task allowed us to explore creativity while still following the official format needed by the office. We were also tasked with scanning and organizing AR and TR documents of faculty members to ensure proper documentation and filing. In addition, I assisted Sir Clyde in scanning documents and certificates requested by the office. These activities helped us improve our technical skills in scanning, organizing files, and handling official records efficiently.", images: ["https://placehold.co/800x600/222/fff?text=Week+2+Img+1", "https://placehold.co/800x600/222/fff?text=Week+2+Img+2", "https://placehold.co/800x600/222/fff?text=Week+2+Img+3", "https://placehold.co/800x600/222/fff?text=Week+2+Img+4", "https://placehold.co/800x600/222/fff?text=Week+2+Img+5"] },
+            { id: 3, week: "Week 03", content: "During this week, we were tasked by Ate Ayin to organize course syllabi and GAD documents of all teaching faculties in BUCS. We carefully checked the documents for missing requirements and reported them for proper compliance and completion. This helped us become more attentive and detail-oriented in handling important records. We also continued routing documents to different offices to ensure proper processing and communication. In addition, I created the PowerPoint presentation for Lecture #3: Biomes and Ecosystem, which enhanced my skills in organizing educational content and designing informative slides. Overall, the week helped us improve both our administrative and presentation-related skills.", images: ["https://placehold.co/800x600/333/fff?text=Week+3+Img+1", "https://placehold.co/800x600/333/fff?text=Week+3+Img+2", "https://placehold.co/800x600/333/fff?text=Week+3+Img+3", "https://placehold.co/800x600/333/fff?text=Week+3+Img+4", "https://placehold.co/800x600/333/fff?text=Week+3+Img+5"] },
+            { id: 4, week: "Week 04", content: "Ma’am Joy assigned us to create PowerPoint presentations for guide questions intended for FCD deans and directors, which helped us understand how official academic materials are prepared. She also tasked us to redesign a presentation about the study titled Exploratory Survey of Lead (Pb) Accumulator Plant Species Thriving in the Tailing Storage Facility of the Masbate Gold Project in Aroroy, Masbate, which improved our layout and design skills further. We also continued routing documents and assisting in office tasks. Ate Ayin assigned us to design labels for organizing documents inside the office, which helped improve consistency in labeling and filing systems. We also worked on finalizing the course syllabus cover layout to ensure it was ready for printing and official use.", images: ["https://placehold.co/800x600/444/fff?text=Week+4+Img+1", "https://placehold.co/800x600/444/fff?text=Week+4+Img+2", "https://placehold.co/800x600/444/fff?text=Week+4+Img+3", "https://placehold.co/800x600/444/fff?text=Week+4+Img+4", "https://placehold.co/800x600/444/fff?text=Week+4+Img+5"] },
+            { id: 5, week: "Week 05", content: "We continued routing documents and organizing files by department to ensure proper document flow and filing. We also printed the finalized course syllabus cover layouts and continued punching and sorting papers for better organization. These tasks helped us become more familiar with proper document handling in a structured office environment. In addition, I was assigned to create the PowerPoint presentation for Lesson 4: Nerve Physiology, which allowed me to improve my ability to organize academic content into clear and understandable slides. This week focused on consistency, organization, and improving efficiency in handling repetitive but important office tasks.", images: ["https://placehold.co/800x600/555/fff?text=Week+5+Img+1", "https://placehold.co/800x600/555/fff?text=Week+5+Img+2", "https://placehold.co/800x600/555/fff?text=Week+5+Img+3", "https://placehold.co/800x600/555/fff?text=Week+5+Img+4", "https://placehold.co/800x600/555/fff?text=Week+5+Img+5"] },
+            { id: 6, week: "Week 06", content: "We continued punching, sorting, and organizing documents, which were already nearing completion. Most of the work involved ensuring that files were properly arranged and categorized for easier access. At one point, we temporarily took over the roles of Ate Ayin and Ate Kim and handled receiving incoming documents in the office. This gave us a better understanding of daily office responsibilities and improved our confidence in handling tasks independently. I was also assigned to create the PowerPoint presentation for Lesson 5: Sensory Physiology, which further strengthened my presentation skills.", images: ["https://placehold.co/800x600/666/fff?text=Week+6+Img+1", "https://placehold.co/800x600/666/fff?text=Week+6+Img+2", "https://placehold.co/800x600/666/fff?text=Week+6+Img+3", "https://placehold.co/800x600/666/fff?text=Week+6+Img+4", "https://placehold.co/800x600/666/fff?text=Week+6+Img+5"] },
+            { id: 7, week: "Week 07", content: "We continued filing and organizing course syllabi and GAD documents as requested by Ate Ayin, ensuring that all files were properly arranged per department. We also made sure that documents were complete and properly labeled to maintain an organized filing system. We continued routing documents as part of our regular tasks, which helped us become more familiar with office procedures and communication flow. I was also assigned to create the PowerPoint presentation for Lesson 6: Muscle Physiology, which improved my ability to present academic topics in a clear and structured format.", images: ["https://placehold.co/800x600/777/fff?text=Week+7+Img+1", "https://placehold.co/800x600/777/fff?text=Week+7+Img+2", "https://placehold.co/800x600/777/fff?text=Week+7+Img+3", "https://placehold.co/800x600/777/fff?text=Week+7+Img+4", "https://placehold.co/800x600/777/fff?text=Week+7+Img+5"] },
+            { id: 8, week: "Week 08", content: "We continued filing and organizing documents inside the office and assisting in maintaining proper record management. There were also instances where we temporarily assisted in office roles to help with daily operations. We also assisted in the BIOTA event held at Hotel St. Ellis and BUCENG Gymnasium by printing documents, preparing materials, and documenting the event through photos. This gave us exposure to both office work and event coverage, helping us develop adaptability in different work environments.", images: ["https://placehold.co/800x600/888/fff?text=Week+8+Img+1", "https://placehold.co/800x600/888/fff?text=Week+8+Img+2", "https://placehold.co/800x600/888/fff?text=Week+8+Img+3", "https://placehold.co/800x600/888/fff?text=Week+8+Img+4", "https://placehold.co/800x600/888/fff?text=Week+8+Img+5"] },
+            { id: 9, week: "Week 09", content: "We continued routing and organizing documents to ensure proper processing and filing. We also exported, edited, and organized photos taken during the BIOTA event, which were then uploaded to Google Drive for posting and archiving purposes. In addition, I was assigned to create the PowerPoint presentation for Lesson 10: Digestive Physiology, which helped me further improve my ability to organize and present educational content in a clear and structured way.", images: ["https://placehold.co/800x600/999/fff?text=Week+9+Img+1", "https://placehold.co/800x600/999/fff?text=Week+9+Img+2", "https://placehold.co/800x600/999/fff?text=Week+9+Img+3", "https://placehold.co/800x600/999/fff?text=Week+9+Img+4", "https://placehold.co/800x600/999/fff?text=Week+9+Img+5"] },
+            { id: 10, week: "Week 10", content: "We validated captions with Ma’am Joy before posting the BIOTA event photos on the BUCS page to ensure accuracy and proper presentation. We also continued routing documents and assisting in office tasks in behalf of Ate Ayin when needed. We documented the BUCS Recognition Day by taking photos of the event, capturing important moments and activities. This contributed to the official documentation and helped us gain more experience in event coverage and reporting.", images: ["https://placehold.co/800x600/aaa/fff?text=Week+10+Img+1", "https://placehold.co/800x600/aaa/fff?text=Week+10+Img+2", "https://placehold.co/800x600/aaa/fff?text=Week+10+Img+3", "https://placehold.co/800x600/aaa/fff?text=Week+10+Img+4", "https://placehold.co/800x600/aaa/fff?text=Week+10+Img+5"] },
+            { id: 11, week: "Week 11", content: "We continued routing documents and printed materials needed by Ma’am Joy and Ma’am Anne for their travel to Batuan, Masbate for the MOA Signing and Biodiversity Assessment Training. We also handled errands assigned by the Dean, which helped us become more flexible in responding to different tasks. We assisted in thesis hardbound monitoring to ensure that submissions were properly checked and organized. We also served as proctors for BSCS 1B under Ma’am Satuito, which gave us experience in maintaining order during academic activities. Lastly, we continued sorting and organizing documents for the academic year 2024–2025 to ensure proper filing and easy retrieval of records.", images: ["https://placehold.co/800x600/bbb/fff?text=Week+11+Img+1", "https://placehold.co/800x600/bbb/fff?text=Week+11+Img+2", "https://placehold.co/800x600/bbb/fff?text=Week+11+Img+3", "https://placehold.co/800x600/bbb/fff?text=Week+11+Img+4", "https://placehold.co/800x600/bbb/fff?text=Week+11+Img+5"] }
         ];
 
         let isMenuOpen = false;
         let currentSlideIndex = 0;
 
-        function toggleMobileMenu() {
+        /**
+         * Global function for copying text to clipboard
+         * STREAMING_CHUNK:Defining Clipboard Utility
+         */
+        window.copyToClipboard = function(txt) {
+            const el = document.createElement('textarea');
+            el.value = txt;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            }
+        };
+
+        window.toggleMobileMenu = function() {
             const dropdown = document.getElementById('mobileDropdown');
             const menuIcon = document.getElementById('menuIcon');
             isMenuOpen = !isMenuOpen;
@@ -518,24 +216,12 @@
                 dropdown.classList.remove('show');
                 menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
             }
-        }
+        };
 
-        document.addEventListener('click', (e) => {
-            if (isMenuOpen && !e.target.closest('#mobileDropdown') && !e.target.closest('button[onclick="toggleMobileMenu()"]')) {
-                toggleMobileMenu();
-            }
-        });
-
-        function navigateTo(pageId) {
+        window.navigateTo = function(pageId) {
             if (isMenuOpen) toggleMobileMenu();
-            
-            // Strictly remove footer on About page
             const footer = document.getElementById('mainFooter');
-            if (pageId === 'about') {
-                footer.style.display = 'none';
-            } else {
-                footer.style.display = 'block';
-            }
+            footer.style.display = (pageId === 'about') ? 'none' : 'block';
 
             document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
             document.getElementById(`page-${pageId}`).classList.remove('hidden');
@@ -543,76 +229,49 @@
             const activeBtn = document.getElementById(`nav-${pageId}`);
             if (activeBtn) activeBtn.classList.add('nav-active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        };
 
         function renderReports() {
             const grid = document.getElementById('reportsGrid');
             if (!grid) return;
             grid.innerHTML = reports.map(r => `
                 <div class="report-card p-8 group relative flex flex-col h-full dark:bg-surface-dark">
-                    <div class="flex justify-between items-center mb-6">
-                        <div class="w-10 h-1 bg-accent-yellow group-hover:w-16 transition-all duration-500 rounded-full"></div>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 pl-4">${r.dates}</span>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase leading-none text-slate-900 dark:text-slate-100 group-hover:text-accent-yellow transition-colors">${r.week}</h4>
-                    <p class="text-[11px] text-slate-600 dark:text-slate-400 font-bold mb-8 leading-relaxed">${r.summary}</p>
+                    <div class="w-10 h-1 bg-accent-yellow mb-6 rounded-full"></div>
+                    <h4 class="text-2xl font-black mb-4 uppercase leading-none text-slate-900 dark:text-slate-100">${r.week}</h4>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 font-bold mb-8 leading-relaxed line-clamp-3">${r.content}</p>
                     <div class="mt-auto pt-6">
                         <button onclick="viewDetail(${r.id})" class="text-[10px] font-black uppercase tracking-widest flex items-center hover:text-accent-yellow transition-all text-slate-900 dark:text-slate-100">
-                            Open Details <i class="fa-solid fa-arrow-right-long ml-3 transform group-hover:translate-x-2 transition-transform"></i>
+                            Details <i class="fa-solid fa-arrow-right-long ml-3 transform group-hover:translate-x-2 transition-transform"></i>
                         </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function viewDetail(id) {
+        window.viewDetail = function(id) {
             const r = reports.find(x => x.id === id);
             const content = document.getElementById('detailContent');
             if (!r || !content) return;
             currentSlideIndex = 0;
             content.innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                    <div class="lg:col-span-8">
-                        <div class="bg-white dark:bg-surface-dark p-8 md:p-12 rounded-[2rem] shadow-sm border border-slate-200 dark:border-white/5">
-                            <h1 class="giant-text text-4xl md:text-5xl lg:text-6xl mb-4 text-slate-900 dark:text-slate-100 leading-none">${r.week}</h1>
-                            <p class="text-accent-yellow font-black uppercase tracking-widest text-xs mb-8">${r.dates}</p>
-                            <div class="space-y-10">
-                                <section>
-                                    <h3 class="text-[10px] font-black mb-4 uppercase text-slate-400 tracking-widest">Weekly Mission</h3>
-                                    <p class="text-slate-800 dark:text-slate-200 text-lg leading-relaxed font-bold">${r.content}</p>
-                                </section>
-                                <section>
-                                    <h3 class="text-[10px] font-black mb-4 uppercase text-slate-400 tracking-widest">Primary Activities</h3>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        ${r.tasks.map(t => `<div class="p-4 bg-slate-50 dark:bg-onyx rounded-xl font-bold flex items-center text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-white/5 text-xs"><i class="fa-solid fa-bolt text-accent-yellow mr-4"></i> ${t}</div>`).join('')}
-                                    </div>
-                                </section>
-                                <section>
-                                    <h3 class="text-[10px] font-black mb-4 uppercase text-slate-400 tracking-widest">Obstacles Overcome</h3>
-                                    <div class="space-y-3">
-                                        ${r.challenges.map(c => `<p class="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center"><i class="fa-solid fa-triangle-exclamation text-red-500 mr-3"></i> ${c}</p>`).join('')}
-                                    </div>
-                                </section>
-                            </div>
+                    <div class="lg:col-span-7">
+                        <div class="bg-white dark:bg-surface-dark p-8 md:p-12 rounded-[2rem] border border-slate-200 dark:border-white/5">
+                            <h1 class="giant-text text-5xl mb-8 text-slate-900 dark:text-slate-100">${r.week}</h1>
+                            <p class="text-slate-800 dark:text-slate-200 text-lg leading-relaxed font-bold">${r.content}</p>
                         </div>
                     </div>
-                    <div class="lg:col-span-4 space-y-8">
-                        <div class="bg-accent-yellow p-8 rounded-[2rem] text-black shadow-lg">
-                            <h4 class="font-black uppercase mb-4 tracking-widest text-[10px] border-b border-black/10 pb-2">Key Competencies</h4>
-                            <ul class="space-y-3 text-xs font-bold">
-                                ${r.learnings.map((l, i) => `<li class="flex items-start">0${i+1}. ${l}</li>`).join('')}
-                            </ul>
-                        </div>
+                    <div class="lg:col-span-5">
                         <div class="carousel-container shadow-2xl border-2 border-white dark:border-surface-dark group/carousel">
                             <div class="carousel-track" id="carouselTrack">${r.images.map(img => `<div class="carousel-slide"><img src="${img}" alt="Evidence" loading="lazy"></div>`).join('')}</div>
                             <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 opacity-0 group-hover/carousel:opacity-100 transition-opacity pointer-events-none">
-                                <button onclick="moveCarousel(-1)" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20 hover:bg-accent-yellow hover:text-black transition-all flex items-center justify-center pointer-events-auto"><i class="fa-solid fa-chevron-left"></i></button>
-                                <button onclick="moveCarousel(1)" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20 hover:bg-accent-yellow hover:text-black transition-all flex items-center justify-center pointer-events-auto"><i class="fa-solid fa-chevron-right"></i></button>
+                                <button onclick="moveCarousel(-1)" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-accent-yellow hover:text-black flex items-center justify-center pointer-events-auto"><i class="fa-solid fa-chevron-left"></i></button>
+                                <button onclick="moveCarousel(1)" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-accent-yellow hover:text-black flex items-center justify-center pointer-events-auto"><i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                             <div class="absolute bottom-6 inset-x-0 flex justify-center space-x-2">
                                 ${r.images.map((_, i) => `<button onclick="jumpToSlide(${i})" id="dot-${i}" class="carousel-dot w-2 h-2 rounded-full bg-white/30 transition-all ${i === 0 ? 'bg-accent-yellow w-6' : ''}"></button>`).join('')}
                             </div>
-                            <div class="absolute top-4 left-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-tighter">
+                            <div class="absolute top-4 left-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black text-white">
                                 <span id="currentSlideNum">1</span> / ${r.images.length} Evidence
                             </div>
                         </div>
@@ -620,19 +279,19 @@
                 </div>
             `;
             navigateTo('detail');
-        }
+        };
 
-        function moveCarousel(dir) {
+        window.moveCarousel = function(dir) {
             const track = document.getElementById('carouselTrack');
             const total = track.children.length;
             currentSlideIndex = (currentSlideIndex + dir + total) % total;
             updateCarouselUI();
-        }
+        };
 
-        function jumpToSlide(idx) {
+        window.jumpToSlide = function(idx) {
             currentSlideIndex = idx;
             updateCarouselUI();
-        }
+        };
 
         function updateCarouselUI() {
             const track = document.getElementById('carouselTrack');
@@ -645,11 +304,6 @@
                 else { dot.classList.remove('bg-accent-yellow', 'w-6'); dot.classList.add('bg-white/30'); }
             });
             if (num) num.innerText = currentSlideIndex + 1;
-        }
-
-        function copyToClipboard(txt) {
-            const el = document.createElement('textarea'); el.value = txt; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
-            const toast = document.getElementById('toast'); toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
         document.getElementById('themeToggle').addEventListener('click', () => {
